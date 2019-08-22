@@ -44,7 +44,7 @@
             <td>{{ item.channel }}</td>
             <td>{{ item.questionType }}</td>
             <td>{{ item.isSkip?"-":"-" }}</td>
-            <td>{{ item.subTime }}</td>
+            <td>{{ dateFormat(item.subTime) }}</td>
             <td>{{ item.sex ? '女' : '男' }}</td>
             <td>{{ item.isInPregnancy?"-":"-"}}</td>
             <td>{{ new Date().getFullYear()-item.babyBirth?"-":"-"}}</td>
@@ -73,9 +73,9 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :page-sizes="[10, 20, 50, 100]"
-        :current-page.sync="currentPage3"
-        :page-size="10"
-        :total="1000"
+        :current-page="nowPage"
+        :page-size="pageSize"
+        :total="count"
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
     </div>
@@ -83,19 +83,23 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions,mapGetters } from "vuex";
+import {dateFormat} from "../../utils/dateFormat"
 export default {
-  data() {
-    return {
-      currentPage3: 1,
-    };
-  },
   computed: {
-    ...mapState(["questionList"])
+    ...mapState(["nowPage","pageSize","questionList"]),
+    ...mapGetters(["count"])
   },
   methods: {
-    handleSizeChange() {},
-    handleCurrentChange() {}
+    ...mapMutations(['setNowPage','setPageSize']),
+    handleSizeChange(size) {
+      this.setPageSize(size)
+      this.setNowPage(1)
+    },
+    handleCurrentChange(page) {
+      this.setNowPage(page)
+    },
+    dateFormat
   }
 };
 </script>

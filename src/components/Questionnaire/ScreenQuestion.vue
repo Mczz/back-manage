@@ -4,12 +4,12 @@
       <span class="title">筛选</span>
       <el-button type="primary" icon="el-icon-search">查询结果</el-button>
       <!-- 控制筛选条件展示与隐藏 -->
-      <div class="collapse">
-        <i class="el-icon-arrow-right"></i>
-        收起筛选
+      <div class="collapse" @click="toggleShowScreen">
+        <i :class="{'el-icon-arrow-up':true,'sss':!showScreen}"></i>
+        {{showScreen?"收起筛选":"展开筛选"}}
       </div>
     </div>
-    <div class="screen">
+    <div :class="{'screen':true,'hiden':!showScreen}">
       <!-- 投放渠道筛选 -->
       <div class="channel screen-item">
         <span>投放渠道：</span>
@@ -83,8 +83,15 @@ export default {
       ],
       value: -1,
       value1: -1,
-      input:""
+      input:"",
+      showScreen:true
     };
+  },
+  methods:{
+      //切换筛选条件的显示与隐藏
+      toggleShowScreen(){
+          this.showScreen=!this.showScreen
+      }
   }
 };
 </script>
