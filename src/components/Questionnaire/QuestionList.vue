@@ -3,9 +3,8 @@
     <!-- 表格标题 -->
     <div class="question-header">
       <span class="title">数据列表</span>
-      <el-button type="primary" icon="el-icon-document-copy">导出数据</el-button>
+      <el-button type="primary" icon="el-icon-document-copy" @click="exportExcel">导出数据</el-button>
     </div>
-
     <!-- 数据列表 -->
     <div class="data-table">
       <table>
@@ -41,28 +40,28 @@
         <tbody>
           <tr v-for="(item,index) in questionList" :key="index">
             <td>{{ item.userId }}</td>
-            <td>{{ item.channel }}</td>
-            <td>{{ item.questionType }}</td>
+            <td>{{ item.channelName }}</td>
+            <td>{{ item.questionType== "1"?"减脂":"辣妈" }}</td>
             <td>{{ item.isSkip?"-":"-" }}</td>
-            <td>{{ dateFormat(item.subTime) }}</td>
+            <td>{{ dateFormat(item.createTime) }}</td>
             <td>{{ item.sex ? '女' : '男' }}</td>
             <td>{{ item.isInPregnancy?"-":"-"}}</td>
             <td>{{ new Date().getFullYear()-item.babyBirth?"-":"-"}}</td>
             <td>{{ new Date().getFullYear()-item.birth?"-":"-"}}</td>
             <td>{{ item.clueValidity?"-":"-"}}</td>
-            <td>{{ item.clueType}}</td>
+            <td>{{ item.clueType=="1"?"减脂":"辣妈"}}</td>
             <td class="PLAM">{{ item.PLAMOrigin?"-":"-"}}</td>
             <td class="PLAM">{{ item.PLAMAddress?"-":"-"}}</td>
             <td class="PLAM">{{ item.PLAMYear?"-":"-"}}</td>
             <td class="PLAM">{{ item.PLAMMonth?"-":"-" }}</td>
             <td class="PLAM">{{ item.PLAMTotal?"-":"-" }}</td>
             <td>{{ item.clueLevel?"-":"-" }}</td>
-            <td>{{ item.skipChannel }}</td>
-            <td>{{ item.skipLink }}</td>
-            <td>{{ item.WChatName?"-":"-" }}</td>
-            <td>{{ item.WChatSex?'女':'男' }}</td>
-            <td>{{ item.WChatCountry?"-":"-" }}</td>
-            <td>{{ item.WChatCity?"-":"-" }}</td>
+            <td>{{ item.redirectLiveChannelName }}</td>
+            <td>{{ item.redirectLiveChannelUrl }}</td>
+            <td>{{ item.wechatNickName?"-":"-" }}</td>
+            <td>{{ item.wechatGender?'女':'男' }}</td>
+            <td>{{ item.wechatCountry?"-":"-" }}</td>
+            <td>{{ item.wechatCity?"-":"-" }}</td>
           </tr>
         </tbody>
       </table>
@@ -75,31 +74,49 @@
         :page-sizes="[10, 20, 50, 100]"
         :current-page="nowPage"
         :page-size="pageSize"
-        :total="count"
+        :total="total"
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
     </div>
   </div>
 </template>
-
 <script>
-import { mapState, mapMutations, mapActions,mapGetters } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import {dateFormat} from "../../utils/dateFormat"
+import api from '../../api'
+
 export default {
   computed: {
-    ...mapState(["nowPage","pageSize","questionList"]),
-    ...mapGetters(["count"])
+    ...mapState(["nowPage","pageSize","questionList",'total','Query']),
   },
   methods: {
     ...mapMutations(['setNowPage','setPageSize']),
+    /* 切换每页数量 */
     handleSizeChange(size) {
-      this.setPageSize(size)
-      this.setNowPage(1)
+      this.setPageSize(size);
+      this.setNowPage(1);
+      this.$store.dispatch('clueQuestionList');
     },
+    /* 切换页面 */
     handleCurrentChange(page) {
-      this.setNowPage(page)
+      this.setNowPage(page);
+      this.$store.dispatch('clueQuestionList');
     },
-    dateFormat
+    /* 格式化日期 */
+    dateFormat,
+    /* 导出到Excel */
+    exportExcel(){
+      api.exoprtClueQuestionExcel(this.Query).then(res=>{
+
+      }).catch(
+        err => {
+          console.log(err)
+        }
+      )
+    }
+  },
+  created(){
+    this.$store.dispatch('clueQuestionList');
   }
 };
 </script>
