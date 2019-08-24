@@ -140,7 +140,12 @@ export default {
       }
       //伪代码：根据id是否存在确认是新增还是修改，调用修改渠道信息的接口，成功关闭编辑页跳转至渠道信息列表
       if (true) {
-        this.$router.push("/DistributionChannel");
+        this.$alert("这是一段内容", "标题名称", {
+          confirmButtonText: "确定",
+          callback: () => {
+            this.$router.push("/DistributionChannel");
+          }
+        });
       }
     }
   }
