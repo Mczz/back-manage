@@ -26,7 +26,7 @@
           <td>{{ item.channelName }}</td>
           <td>{{ item.fitcampLiveCodeUrl }}</td>
           <td>{{ item.ownerName }}</td>
-          <td>{{ item.createTime }}</td>
+          <td>{{ dateFormat(item.createTime) }}</td>
           <td>
             <span class="edit" @click="del(item.id)">删除</span>
             &nbsp;
@@ -52,6 +52,8 @@
 <script>
 import { mapState } from "vuex";
 import api from "../../api";
+import {dateFormat} from "../../utils/dateFormat"
+
 export default {
   data() {
     return {};
@@ -99,7 +101,9 @@ export default {
         .catch(err => {
           console.log(err);
         });
-    }
+    },
+    /* 格式化日期 */
+    dateFormat
   },
   created() {
     this.$store.dispatch("channel/getChannelList");
