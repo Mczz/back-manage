@@ -17,6 +17,18 @@ export default{
             headers:{"Content-Type":"application/x-www-form-urlencoded"},
             params:QUERY
         })
+    },
+    getChannelList(QUERY){
+        return Axios.get(URLS.exoprtClueQuestionExcel,{
+            headers:{"Content-Type":"application/x-www-form-urlencoded"},
+            params:QUERY
+        })
+    },
+    exportClueStatistics(QUERY){
+        return Axios.get(URLS.exportClueStatistics,{
+            headers:{"Content-Type":"application/x-www-form-urlencoded"},
+            params:QUERY
+        })
     }
     
 }

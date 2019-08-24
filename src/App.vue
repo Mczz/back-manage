@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-link to='/'>问卷系统</router-link>
+    <router-link to='/'>问卷系统</router-link> | <router-link to='/DistributionChannel'>渠道管理系统</router-link>
     <router-view></router-view>
   </div>
 </template>

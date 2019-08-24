@@ -61,7 +61,7 @@
             <td>{{ item.wechatNickName?"-":"-" }}</td>
             <td>{{ item.wechatGender?'女':'男' }}</td>
             <td>{{ item.wechatCountry?"-":"-" }}</td>
-            <td>{{ item.wechatCity?"-":"-" }}</td>
+            <td>{{ item.wechatProvince+" "+item.wechatCity }}</td>
           </tr>
         </tbody>
       </table>
@@ -81,26 +81,32 @@
   </div>
 </template>
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState} from "vuex";
 import {dateFormat} from "../../utils/dateFormat"
 import api from '../../api'
 
 export default {
   computed: {
-    ...mapState(["nowPage","pageSize","questionList",'total','Query']),
+    ...mapState({
+      nowPage:state => state.question.nowPage,
+      pageSize:state => state.question.pageSize,
+      questionList:state => state.question.questionList,
+      total:state => state.question.total,
+      Query:state => state.question.Query,
+
+    }),
   },
   methods: {
-    ...mapMutations(['setNowPage','setPageSize']),
     /* 切换每页数量 */
     handleSizeChange(size) {
-      this.setPageSize(size);
-      this.setNowPage(1);
-      this.$store.dispatch('clueQuestionList');
+      this.$store.commit('question/setPageSize',size);
+      this.$store.commit('question/setNowPage',1);
+      this.$store.dispatch('question/clueQuestionList');
     },
     /* 切换页面 */
     handleCurrentChange(page) {
-      this.setNowPage(page);
-      this.$store.dispatch('clueQuestionList');
+      this.$store.commit('question/setNowPage',page);
+      this.$store.dispatch('question/clueQuestionList');
     },
     /* 格式化日期 */
     dateFormat,
@@ -116,7 +122,7 @@ export default {
     }
   },
   created(){
-    this.$store.dispatch('clueQuestionList');
+    this.$store.dispatch('question/clueQuestionList');
   }
 };
 </script>

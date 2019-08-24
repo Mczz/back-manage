@@ -91,6 +91,7 @@ export default {
         }
       ],
       redirectLiveChannelCodeOptions: [],
+      //查询条件双向绑定
       querys: {
         channelCode: "",
         questionType: "",
@@ -98,7 +99,9 @@ export default {
         startAndEndTime: null,
         userId: ""
       },
+      //是否显示查询条件
       showScreen: true,
+      // 防抖
       queryTimer: null,
       clearTimer: null
     };
@@ -118,9 +121,9 @@ export default {
         this.querys.startAndEndTime = null;
         this.querys.userId = "";
         //恢复到全部问卷page=1状态
-        this.$store.commit("setNowPage",1);
-        this.$store.commit("setQuery", {});
-        this.$store.dispatch("clueQuestionList");
+        this.$store.commit("question/setNowPage",1);
+        this.$store.commit("question/setQuery", {});
+        this.$store.dispatch("question/clueQuestionList");
       },100);
     },
     /* 重新设置查找参数 */
@@ -141,8 +144,9 @@ export default {
             Query.endDateTime = endDateTime;
           }
         }
-        this.$store.commit("setQuery", Query);
-        // this.$store.dispatch("clueQuestionList");
+        this.$store.commit("question/setNowPage",1);
+        this.$store.commit("question/setQuery", Query);
+        this.$store.dispatch("question/clueQuestionList");
       }, 100);
     }
   }
