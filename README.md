@@ -1,5 +1,7 @@
 # back-manage
-
+```
+后台管理系统问卷列表及渠道管理页面
+```
 ## Project setup
 ```
 npm install
@@ -24,6 +26,3 @@ npm run test
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
