@@ -70,8 +70,19 @@ export default {
     }
   },
   created() {
-    //这里采用了直接将信息传过来的方式，没有用id再次请求，缺点是刷新页面信息会丢失
-    this.channelDetail = this.$route.params.channelDetail;
+
+    if (this.$route.params.prop) {
+      this.channelDetail = this.$route.params.prop;
+    }else if(sessionStorage.getItem("channelDetail")){
+      this.channelDetail= JSON.parse(sessionStorage.getItem('channelDetail'));
+    }
+    else{
+      this.channelDetail={}
+    }
+    // 在页面刷新时将store保存到sessionStorage里
+    window.addEventListener("beforeunload", () => {
+      sessionStorage.setItem("channelDetail", JSON.stringify(this.channelDetail));
+    });
   }
 };
 </script>

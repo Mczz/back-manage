@@ -1,93 +1,117 @@
-.dis-channel{
+.dis-channel {
     font-size: 13px;
     color: #333333;
-    .channel-control{
+
+    .channel-control {
         margin-top: 30px;
         display: flex;
-        justify-content:space-between;
-        .el-input__inner,.el-button {
+        justify-content: space-between;
+
+        .el-input__inner,
+        .el-button {
             height: 30px;
             line-height: 30px;
         }
-        .screen{
-            span{
+
+        .screen {
+            span {
                 margin-right: 10px;
             }
-            
+
         }
-        .code-name{
+
+        .code-name {
             width: 200px;
         }
-        .el-button{
+
+        .el-button {
             padding: 0 10px;
             background: #5cb85c;
             border: none;
             font-size: 13px;
         }
-        .search{
+
+        .search {
             background: #337ab7;
         }
     }
-   
-    .channel-list{
-        .list-header{
-            .el-button{
-                margin:20px 0px; 
+
+    .question-list {
+        margin-top: 20px;
+        .question-header {
+            height: 40px;
+
+            .el-button {
+                float: left;
+                margin: 8px 0px;
                 font-size: 13px;
                 width: 90px;
-                height: 30px;
+                height: 24px;
                 color: #ffffff;
-                line-height: 30px;
+                line-height: 24px;
                 background: #5cb85c;
                 padding: 0;
                 border: none;
             }
         }
-        table{
+
+        table {
             width: 100%;
-            thead{
-                th{
+
+            thead {
+                th {
                     text-align: center;
                     border: 1px solid #dcdfe6;
                     line-height: 30px;
                     padding: 0 20px;
+                    background: #f9f9f9;
+
 
                 }
             }
-            tbody{
-                tr{
-                    &.bg{
+
+            tbody {
+                tr {
+                    &:nth-child(even){
                         background: #f9f9f9;
                     }
-                    td{
+
+                    td {
                         border: 1px solid #dcdfe6;
                         line-height: 30px;
                         text-align: center;
                         padding: 0 20px;
-                        .edit{
+
+                        .edit {
                             color: #337ab7;
                             cursor: pointer;
                         }
                     }
                 }
-                
+
             }
-            
+
         }
-        .el-pagination{
+
+        .el-pagination {
             margin-top: 30px;
             text-align: center;
-            .btn-next,.number,.btn-prev{
+
+            .btn-next,
+            .number,
+            .btn-prev {
                 margin: 0;
                 background: #fff;
                 border: 1px solid #dcdfe6;
                 color: #337ab7;
-                &.active{
+
+                &.active {
                     background: #337ab7;
                     color: #fff;
                 }
             }
         }
     }
-    
+
+
 }

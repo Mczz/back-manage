@@ -93,7 +93,7 @@ export default {
   data() {
     return {
       channelDetail: {},
-      /* 应有一个接口来获取下拉菜单options的可选值 */
+      /*获取下拉菜单options的可选值 */
       options: {
         channelType: [],
         firstChannelName: [],
@@ -102,11 +102,26 @@ export default {
       }
     };
   },
+  beforeRouteEnter(to, from, next) {
+    if(from.path =="/DistributionChannel"){
+       window.sessionStorage.removeItem("channelDetail")
+    }
+    next();
+  },
   created() {
-    //这里采用了直接将信息传过来的方式，没有用id再次请求，问题是刷新页面信息会丢失
     if (this.$route.params.channelDetail) {
       this.channelDetail = this.$route.params.channelDetail;
+    } else if(sessionStorage.getItem("channelDetail")){
+      this.channelDetail = JSON.parse(sessionStorage.getItem("channelDetail"));
+    }else{
+      this.channelDetail={}
     }
+    window.addEventListener("beforeunload", () => {
+      sessionStorage.setItem(
+        "channelDetail",
+        JSON.stringify(this.channelDetail)
+      );
+    });
   },
   methods: {
     addLeader() {
@@ -138,9 +153,9 @@ export default {
         });
         return;
       }
-      //伪代码：根据id是否存在确认是新增还是修改，调用修改渠道信息的接口，成功关闭编辑页跳转至渠道信息列表
+      //调用修改渠道信息的接口，成功关闭编辑页跳转至渠道信息列表
       if (true) {
-        this.$alert("这是一段内容", "标题名称", {
+        this.$alert("修改或创建成功", "提升", {
           confirmButtonText: "确定",
           callback: () => {
             this.$router.push("/DistributionChannel");
